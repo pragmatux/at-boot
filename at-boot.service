@@ -1,0 +1,10 @@
+[Unit]
+Description=At-Boot Executable
+OnFailure=rescue.target
+OnFailureIsolate=true
+
+[Service]
+Type=oneshot
+ExecStart=/at-boot
+ExecStopPost=-/bin/systemctl --fail --no-block default
+StandardOutput=tty

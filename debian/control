@@ -1,0 +1,15 @@
+Source: at-boot
+Section: admin
+Priority: extra
+Maintainer: Ryan Kuester <rkuester@insymbols.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+Vcs-Git: http://git.pragmatux.org/at-boot.git
+Vcs-Browser: http://git.pragmatux.org/at-boot.git
+
+Package: at-boot
+Architecture: all
+Depends: systemd, ${misc:Depends}
+Description: Run /at-boot at bootup
+ A systemd service which runs /at-boot in the isolated target "at-boot" at
+ bootup, if /at-boot exists.

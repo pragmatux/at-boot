@@ -1,0 +1,4 @@
+[Unit]
+Description=At-Boot Mode
+Requires=basic.target at-boot.service
+AllowIsolate=yes
