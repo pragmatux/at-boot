@@ -2,47 +2,10 @@
 #
 # If the $FLAG is set, make "at-boot" the default target.
 #
-# In the present version of systemd (Debian 44-10), we have no choice
-# but to write a link in /etc/systemd/system, since units in
-# /run/systemd/generator dont seem to be loaded in the same way as
-# static units, and there's a problem where empty directories on the
-# unit search path, like /run/systemd/system, are removed before the
-# generators run if they are empty.
-#
-# Generators are more powerful in an upstream version of systemd. Once
-# it's available, this generator should be revisited, and maybe
-# eliminated altogether in favor of the new system-update mode.
-
-# If there's already a link for the default target, we preserve it,
-# unless it's to "at-boot". This script must be idempotent because
-# systemd may rerun generators.
 
 FLAG=/at-boot
 ATBOOT=/lib/systemd/system/at-boot.target
-DEFAULT=/etc/systemd/system/default.target
+DEFAULT=/run/systemd/system/default.target
 
-create_link ()
-{
-	if [ $DEFAULT -ef $ATBOOT ]; then
-		return
-	elif [ -e $DEFAULT ]; then
-		mv $DEFAULT $DEFAULT.save
-	fi
-
-	ln -sf $ATBOOT $DEFAULT
-}
-
-remove_link ()
-{
-	rm $DEFAULT
-
-	if [ -e $DEFAULT.save ]; then
-		mv $DEFAULT.save $DEFAULT.save
-	fi
-}
-
-if [ -x $FLAG ]; then
-	create_link
-else
-	remove_link
-fi
+test -x $FLAG && ln -sf $ATBOOT $DEFAULT
+exit
