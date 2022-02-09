@@ -8,4 +8,4 @@ ATBOOT=/lib/systemd/system/at-boot.target
 DEFAULT=/run/systemd/system/default.target
 
 test -x $FLAG && ln -sf $ATBOOT $DEFAULT
-exit
+true
